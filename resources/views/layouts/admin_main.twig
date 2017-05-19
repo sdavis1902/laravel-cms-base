@@ -65,7 +65,7 @@
 
 					<div class="navbar-custom-menu">
 						<ul class="nav navbar-nav">
-							{% include('snippets.top_menu') %}
+							{% include('snippets.admin.top_menu') %}
 						</ul>
 					</div>
 				</nav>
@@ -79,7 +79,7 @@
 					<section class="sidebar">
 						<!-- sidebar menu: : style can be found in sidebar.less -->
 						<ul class="sidebar-menu">
-							{% include('snippets.side_menu') %}
+							{% include('snippets.admin.side_menu') %}
 						</ul>
 					</section>
 					<!-- /.sidebar -->
@@ -91,7 +91,7 @@
 				<div class="content-wrapper">
 					<!-- Content Header (Page header) -->
 					<section class="content-header">
-						{% include 'snippets.alerts' %}
+						{% include 'snippets.admin.alerts' %}
 						<h1>
 							{% block title %}{% endblock %}
 							<small>{% block subtitle %}{% endblock %}</small>

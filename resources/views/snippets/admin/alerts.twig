@@ -1,0 +1,36 @@
+{% if session_has('message') %}
+	<div class="alert alert-{{ session_has('message_type') ? session_get('message_type') : 'info' }} alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<h4><i class="icon fa fa-info"></i> Alert!</h4>
+        {{ session_get('message') }}
+    </div>
+{% endif %}
+{% if session_has('info') %}
+	<div class="alert alert-info alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<h4><i class="icon fa fa-info"></i> Alert!</h4>
+        {{ session_get('info') }}
+    </div>
+{% endif %}
+{% if session_has('error') %}
+	<div class="alert alert-error alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<h4><i class="icon fa fa-ban"></i> Alert!</h4>
+        {{ session_get('error') }}
+    </div>
+{% endif %}
+{% if session_has('warning') %}
+	<div class="alert alert-warning alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<h4><i class="icon fa fa-warning"></i> Alert!</h4>
+        {{ session_get('warning') }}
+    </div>
+{% endif %}
+{% if session_has('success') %}
+	<div class="alert alert-success alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<h4><i class="icon fa fa-check"></i> Alert!</h4>
+        {{ session_get('success') }}
+    </div>
+{% endif %}
+
