@@ -11,6 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+MoreRoute::controller('admin/auth', 'AdminAuthController');
+
+Route::group(['middleware' => ['authcheck', 'adminviewshare']], function () {
+    MoreRoute::controller('admin/user', 'AdminUserController');
 });

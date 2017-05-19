@@ -1,0 +1,92 @@
+{% extends 'layouts.admin_main' %}
+
+{% block title %}
+	{{ user ? 'Edit':'New' }} User
+{% endblock %}
+
+{% block pagejs %}
+	<script src="{{ asset('assets/plugins/bootbox.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/user.edit.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+	<!-- /.row -->
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="box">
+				<div class="box-body">
+					<div class="row">
+						<form role="form" method="POST">
+							<input type="hidden" name="_token" value="{{ csrf_token()|raw }}" />
+							<div class="col-lg-12">
+								<div class="form-group{{ errors.has('first_name') ? ' has-error':'' }}">
+									<label>First Name</label>
+									<input name="first_name" class="form-control" value="{{ old('first_name') ? old('first_name') : (user) ? user.first_name:''}}">
+									{% if errors.has('first_name') %}
+										{% for error in errors.get('first_name') %}
+                                            <p class="help-block">
+                                                {{ error }}
+                                            </p>
+                                        {% endfor %}
+                                    {% endif %}
+								</div>
+								<div class="form-group{{ errors.has('last_name') ? ' has-error':'' }}">
+									<label>Last Name</label>
+									<input name="last_name" class="form-control" value="{{ old('last_name') ? old('last_name') : (user) ? user.last_name:''}}">
+									{% if errors.has('last_name') %}
+										{% for error in errors.get('last_name') %}
+                                            <p class="help-block">
+                                                {{ error }}
+                                            </p>
+                                        {% endfor %}
+                                    {% endif %}
+								</div>
+								<div class="form-group{{ errors.has('email') ? ' has-error':'' }}">
+									<label>Email</label>
+									<input name="email" class="form-control" value="{{ old('email') ? old('email') : (user) ? user.email:''}}">
+									{% if errors.has('email') %}
+										{% for error in errors.get('email') %}
+                                            <p class="help-block">
+                                                {{ error }}
+                                            </p>
+                                        {% endfor %}
+                                    {% endif %}
+								</div>
+								<div class="form-group{{ errors.has('password') ? ' has-error':'' }}">
+									<label>Password</label>
+									<input type="password" name="password" class="form-control" value="">
+									{% if errors.has('password') %}
+										{% for error in errors.get('password') %}
+                                            <p class="help-block">
+                                                {{ error }}
+                                            </p>
+                                        {% endfor %}
+                                    {% endif %}
+								</div>
+								<div class="form-group{{ errors.has('password_confirmation') ? ' has-error':'' }}">
+									<label>Password Confirmation</label>
+									<input type="password" name="password_confirmation" class="form-control" value="">
+									{% if errors.has('password_confirmation') %}
+										{% for error in errors.get('password_confirmation') %}
+                                            <p class="help-block">
+                                                {{ error }}
+                                            </p>
+                                        {% endfor %}
+                                    {% endif %}
+								</div>
+
+								<button type="submit" class="btn btn-primary pull-right">Save</button>
+							</div>
+						</form>
+						<!-- /.col-lg-6 (nested) -->
+					</div>
+					<!-- /.row (nested) -->
+                </div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel -->
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+{% endblock %}
