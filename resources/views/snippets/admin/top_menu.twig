@@ -1,43 +1,18 @@
-<li class="dropdown notifications-menu schools-select-menu">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-		<i class="fa fa-building-o"></i>
-        <span class="label label-warning">1</span>
-    </a>
-    <ul class="dropdown-menu">
-		<li class="header">To Switch Schools, select from dropdown</li>
-        <li>
-			<!-- inner menu: contains the actual data -->
-            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 200px;">
-				<ul class="menu" style="overflow: hidden; width: 100%; height: 200px;">
-					<li>
-						<a href="/account">
-							<i class="fa fa-check text-green"></i> Account Home
-						</a>
-					</li>
-				</ul>
-				<div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 3px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 195.122px;">
-				</div>
-				<div class="slimScrollRail" style="width: 3px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;">
-				</div>
-			</div>
-        </li>
-    </ul>
-</li>
 <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu dropdown-user">
         <li>
-            <a href="{{ url('user/edit/' ~ user.id) }}"><i class="fa fa-user fa-fw"></i> My Profile</a>
+            <a href="{{ url('admin/user/edit/' ~ user.id) }}"><i class="fa fa-user fa-fw"></i> My Profile</a>
         </li>
         <li>
-            <a href="{{ url('user') }}"><i class="fa fa-users fa-fw"></i> Users</a>
+            <a href="{{ url('admin/user') }}"><i class="fa fa-users fa-fw"></i> Users</a>
         </li>
         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
         </li>
         <li class="divider"></li>
-        <li><a href="{{ url('auth/logout') }}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+        <li><a href="{{ url('admin/auth/logout') }}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
         </li>
     </ul>
     <!-- /.dropdown-user -->

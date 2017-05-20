@@ -43,7 +43,7 @@
 								<tr class="odd gradeX">
 									<td>{{ user.first_name }} {{ user.last_name }}</td>
 									<td>{{ user.email }}</td>
-									<td>{{ user.last_login.timezone(config_get('app.output_timezone')).toDayDateTimeString() }}</td>
+									<td>{{ user.last_login.timezone(env('OUTPUT_TIMEZONE')).toDayDateTimeString() }}</td>
 									<td>
 										<a href="{{ url('admin/user/edit/' ~ user.id) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
 										<a href="{{ url('admin/user/delete/' ~ user.id) }}" class="btn btn-danger btn-xs user-delete"><i class="fa fa-times"></i></a>

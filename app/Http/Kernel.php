@@ -58,6 +58,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 
 		'authcheck'         => \App\Http\Middleware\AuthCheck::class,
-        'globalviewshare'   => \App\Http\Middleware\AdminViewShare::class,
+        'adminviewshare'   => \App\Http\Middleware\AdminViewShare::class,
     ];
 }

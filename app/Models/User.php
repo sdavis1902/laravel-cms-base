@@ -11,7 +11,7 @@ class User extends EloquentUser{
     ];
 
 	protected $dates = [
-		'created_at', 'update_at', 'deleted_at'
+		'created_at', 'update_at', 'deleted_at', 'last_login'
 	];
 
     /**

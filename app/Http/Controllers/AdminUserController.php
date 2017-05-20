@@ -36,6 +36,7 @@ class AdminUserController extends Controller {
             ],
             'password' => (!$id ? 'required|' : '') . 'between:8,24|confirmed'
         ];
+
         $v = Validator::make($request->all(), $rules);
 
         if( $v->fails() ){

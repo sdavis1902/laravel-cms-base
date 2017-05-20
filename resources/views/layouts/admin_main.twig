@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>{% block titletag %}Parent Portal{% endblock %}</title>
+		<title>{% block titletag %}{{ env('SITE_TITLE', 'CMS Base') }}{% endblock %}</title>
 		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		<!-- Bootstrap 3.3.6 -->
@@ -32,11 +32,7 @@
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 	</head>
-	{% if current_school and current_school.theme %}
-		<body class="hold-transition skin-{{ current_school.theme }} sidebar-mini">
-	{% else %}
-		<body class="hold-transition skin-blue sidebar-mini">
-	{% endif %}
+	<body class="hold-transition skin-blue sidebar-mini">
 		<!-- Site wrapper -->
 		<div class="wrapper">
 			<header class="main-header">

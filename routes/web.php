@@ -13,6 +13,12 @@
 
 MoreRoute::controller('admin/auth', 'AdminAuthController');
 
+Route::get('admin', function(){
+	return redirect('admin/dashboard');
+});
 Route::group(['middleware' => ['authcheck', 'adminviewshare']], function () {
+    MoreRoute::controller('admin/dashboard', 'AdminDashboardController');
     MoreRoute::controller('admin/user', 'AdminUserController');
+    //MoreRoute::controller('admin/folder', 'AdminFolderController');
+    //MoreRoute::controller('admin/page', 'AdminPageController');
 });
