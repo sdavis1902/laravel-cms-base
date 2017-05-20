@@ -19,6 +19,7 @@ Route::get('admin', function(){
 Route::group(['middleware' => ['authcheck', 'adminviewshare']], function () {
     MoreRoute::controller('admin/dashboard', 'AdminDashboardController');
     MoreRoute::controller('admin/user', 'AdminUserController');
-    //MoreRoute::controller('admin/folder', 'AdminFolderController');
-    //MoreRoute::controller('admin/page', 'AdminPageController');
+    MoreRoute::controller('admin/folder', 'AdminFolderController');
+    MoreRoute::controller('admin/page', 'AdminPageController');
+    MoreRoute::controller('admin/site', 'AdminSiteController');
 });
