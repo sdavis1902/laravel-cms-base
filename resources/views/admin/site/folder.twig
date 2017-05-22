@@ -1,0 +1,98 @@
+{% extends 'admin.layouts.main' %}
+
+{% block title %}
+	{{ page.id is defined ? 'Edit':'Create' }} Folder
+{% endblock %}
+
+{% block content %}
+	<!-- /.row -->
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="box">
+				<div class="box-body">
+					<div class="row">
+						<form role="form" method="POST">
+							<input type="hidden" name="_token" value="{{ csrf_token()|raw }}" />
+							<div class="col-lg-6">
+                                <div class="form-group{{ errors.has('name') ? ' has-error':'' }}">
+									<label class="control-label">Name</label>
+                                    <input type="text" name="name" id="name" class="form-control" value="{{ old('name') ? old('name') : folder.name }}">
+                                    {% if errors.has('name') %}
+                                        {% for error in errors.get('name') %}
+                                            <p class="help-block">{{ error }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+								</div>
+                                <div class="form-group{{ errors.has('url') ? ' has-error':'' }}">
+									<label class="control-label">URL</label>
+                                    <input type="text" name="url" id="url" class="form-control" value="{{ old('url') ? old('url') : folder.url }}">
+                                    {% if errors.has('url') %}
+                                        {% for error in errors.get('url') %}
+                                            <p class="help-block">{{ error }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+								</div>
+                                <div class="form-group{{ errors.has('order') ? ' has-error':'' }}">
+									<label class="control-label">Order</label>
+									<select name="order" id="order" class="form-control">
+										{% for i in 1..max_order %}
+											{% if old('order') == i or folder.order == i %}
+												<option selected value="{{ i }}">{{ i }}</option>
+											{% else %}
+												<option value="{{ i }}">{{ i }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+                                    {% if errors.has('order') %}
+                                        {% for error in errors.get('order') %}
+                                            <p class="help-block">{{ error }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+								</div>
+							</div>
+							<div class="col-lg-6">
+                                 <div class="form-group{{ errors.has('visible') ? ' has-error':'' }}">
+									<label class="control-label">Visible</label>
+									<select name="visible" id="visible" class="form-control">
+										{% if old('visible') == 'No' or folder.visible == 'No' %}
+											<option value="Yes">Yes</option>
+											<option selected value="No">No</option>
+										{% else %}
+											<option selected value="Yes">Yes</option>
+											<option value="No">No</option>
+										{% endif %}
+									</select>
+                                    {% if errors.has('visible') %}
+                                        {% for error in errors.get('visible') %}
+                                            <p class="help-block">{{ error }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+								</div>
+                               <div class="form-group{{ errors.has('status') ? ' has-error':'' }}">
+									<label class="control-label">Status</label>
+									<select name="status" id="status" class="form-control">
+										{% if old('status') == 'Inactive' or folder.status == 'Inactive' %}
+											<option value="Active">Active</option>
+											<option selected value="Inactive">Inactive</option>
+										{% else %}
+											<option selected value="Active">Active</option>
+											<option value="Inactive">Inactive</option>
+										{% endif %}
+									</select>
+                                    {% if errors.has('status') %}
+                                        {% for error in errors.get('status') %}
+                                            <p class="help-block">{{ error }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+								</div>
+							</div>
+						</div>
+						<div class='pull-right'>
+							<button type="submit" class="btn btn-primary">{{ folder.id is defined ? 'Update' : 'Create' }} Folder</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,165 @@
+@extends( 'layouts/admin-main' )
+
+@section('pagejs')
+	<script src="{{ url('assets/plugins/ckeditor/ckeditor.js') }}"></script>
+	<script src="{{ url('assets/js/admin.site.page.js') }}"></script>
+@endsection
+
+@section( 'content' )
+	<div class="row">
+        <div class="col-lg-12">
+			<h1 class="page-header">{{ isset( $page->id ) ? 'Edit':'Create' }} Page</h1>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+					<form method="POST">
+						<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+						<div class="row">
+							<div class="col-lg-6">
+                                <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+									<label class="control-label">Name</label>
+                                    <input type="text" name="name" id="name" class="form-control" value="{{ isset( $page->name ) ? $page->name : ( old('name') ? old('name'):'' ) }}">
+                                    @if( $errors->has('name') )
+                                        @foreach( $errors->get('name') as $error )
+                                            <p class="help-block">
+                                                {{ $error }}
+                                            </p>
+                                        @endforeach
+                                    @endif
+								</div>
+                                <div class="form-group{{ $errors->has('url') ? ' has-error' : '' }}">
+									<label class="control-label">URL</label>
+                                    <input type="text" name="url" id="url" class="form-control" value="{{ isset( $page->url ) ? $page->url : ( old('url') ? old('url'):'' ) }}">
+                                    @if( $errors->has('url') )
+                                        @foreach( $errors->get('url') as $error )
+                                            <p class="help-block">
+                                                {{ $error }}
+                                            </p>
+                                        @endforeach
+                                    @endif
+								</div>
+                                <div class="form-group{{ $errors->has('folder') ? ' has-error' : '' }}">
+									<label class="control-label">Folder</label>
+									<select name="folder" id="folder" class="form-control">
+										@foreach( $folders as $folder )
+											@if( ( isset( $page->folder_id ) && $page->folder_id == $folder->id ) || ( old('folder') && old('folder') == $folder->id ) )
+												<option selected value="{{ $folder->id }}">{{ $folder->name }}</option>
+											@else
+												<option value="{{ $folder->id }}">{{ $folder->name }}</option>
+											@endif
+										@endforeach
+									</select>
+                                    @if( $errors->has('folder') )
+                                        @foreach( $errors->get('folder') as $error )
+                                            <p class="help-block">
+                                                {{ $error }}
+                                            </p>
+                                        @endforeach
+                                    @endif
+								</div>
+							</div>
+							<div class="col-lg-6">
+                                <div class="form-group{{ $errors->has('order') ? ' has-error' : '' }}">
+									<label class="control-label">Order</label>
+									<select name="order" id="order" class="form-control">
+										@for($i=0; $i<20; $i++)
+											@if( ( isset( $page->order ) && $page->order == $i ) or ( old('order') and old('order') == $i ) )
+												<option selected value="{{ $i }}">{{ $i }}</option>
+											@else
+												<option value="{{ $i }}">{{ $i }}</option>
+											@endif
+										@endfor
+									</select>
+                                    @if( $errors->has('order') )
+                                        @foreach( $errors->get('order') as $error )
+                                            <p class="help-block">
+                                                {{ $error }}
+                                            </p>
+                                        @endforeach
+                                    @endif
+								</div>
+                                 <div class="form-group{{ $errors->has('visible') ? ' has-error' : '' }}">
+									<label class="control-label">Visible</label>
+									<select name="visible" id="visible" class="form-control">
+										@if( ( isset( $page->visible ) && $page->visible == 'No' ) || ( old('visible') && old('visible') == 'No' ) )
+											<option value="Yes">Yes</option>
+											<option selected value="No">No</option>
+										@else
+											<option selected value="Yes">Yes</option>
+											<option value="No">No</option>
+										@endif
+									</select>
+                                    @if( $errors->has('visible') )
+                                        @foreach( $errors->get('visible') as $error )
+                                            <p class="help-block">
+                                                {{ $error }}
+                                            </p>
+                                        @endforeach
+                                    @endif
+								</div>
+                               <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+									<label class="control-label">Status</label>
+									<select name="status" id="status" class="form-control">
+										@if( ( isset( $page->status ) && $page->status == 'Inactive' ) || ( old('status') && old('status') == 'Inactive' ) )
+											<option value="Active">Active</option>
+											<option selected value="Inactive">Inactive</option>
+										@else
+											<option selected value="Active">Active</option>
+											<option value="Inactive">Inactive</option>
+										@endif
+									</select>
+                                    @if( $errors->has('status') )
+                                        @foreach( $errors->get('status') as $error )
+                                            <p class="help-block">
+                                                {{ $error }}
+                                            </p>
+                                        @endforeach
+                                    @endif
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-12">
+                                <div class="form-group{{ $errors->has('content') ? ' has-error' : '' }}">
+									<label class="control-label">Page Content</label>
+									<textarea name="content" id="content">{{ isset( $page->content ) ? $page->content : ( old('content') ? old('content'):'' ) }}</textarea>
+                                    @if( $errors->has('content') )
+                                        @foreach( $errors->get('content') as $error )
+                                            <p class="help-block">
+                                                {{ $error }}
+                                            </p>
+                                        @endforeach
+                                    @endif
+								</div>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-12">
+                                <div class="form-group{{ $errors->has('sidebar') ? ' has-error' : '' }}">
+									<label class="control-label">Side Bar Content ( optional )</label>
+									<textarea name="sidebar" id="sidebar">{{ isset( $page->sidebar ) ? $page->sidebar : ( old('sidebar') ? old('sidebar'):'' ) }}</textarea>
+                                    @if( $errors->has('sidebar') )
+                                        @foreach( $errors->get('sidebar') as $error )
+                                            <p class="help-block">
+                                                {{ $error }}
+                                            </p>
+                                        @endforeach
+                                    @endif
+								</div>
+
+							</div>
+						</div>
+						<div class='pull-right'>
+							<button type="submit" class="btn btn-primary">{{ isset( $page->id ) ? 'Update' : 'Create' }} Page</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+@endsection

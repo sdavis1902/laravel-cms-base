@@ -12,7 +12,11 @@ class Page extends Model {
     protected $table = 'pages';
     protected $dates = ['deleted_at', 'created_at', 'updated_at'];
 
-	public function folders(){
+	public function folder(){
 		return $this->belongsTo('App\Models\Folder');
+	}
+
+	public function layout(){
+		return $this->belongsTo('App\Models\PageLayout');
 	}
 }
