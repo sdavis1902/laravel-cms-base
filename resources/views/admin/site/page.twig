@@ -1,78 +1,72 @@
-@extends( 'layouts/admin-main' )
+{% extends 'admin.layouts.main' %}
 
-@section('pagejs')
+{% block pagejs %}
 	<script src="{{ url('assets/plugins/ckeditor/ckeditor.js') }}"></script>
 	<script src="{{ url('assets/js/admin.site.page.js') }}"></script>
-@endsection
+{% endblock %}
 
-@section( 'content' )
-	<div class="row">
-        <div class="col-lg-12">
-			<h1 class="page-header">{{ isset( $page->id ) ? 'Edit':'Create' }} Page</h1>
-		</div>
-	</div>
+{% section title %}
+	{{ page.id is defined ? 'Edit':'Create' }} Page
+{% endsection %}
 
+{% section content %}
 	<div class="row">
 		<div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-body">
 					<form method="POST">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+						<input type="hidden" name="_token" value="{{ csrf_token()|raw }}" />
 						<div class="row">
 							<div class="col-lg-6">
-                                <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                <div class="form-group{{ errors.has('name') ? ' has-error' : '' }}">
 									<label class="control-label">Name</label>
-                                    <input type="text" name="name" id="name" class="form-control" value="{{ isset( $page->name ) ? $page->name : ( old('name') ? old('name'):'' ) }}">
-                                    @if( $errors->has('name') )
-                                        @foreach( $errors->get('name') as $error )
+                                    <input type="text" name="name" id="name" class="form-control" value="{{ old('name') ? old('name') : ( page ? page.name:'' ) }}">
+                                    {% if errors.has('name') %}
+                                        {% for error in errors.get('name') %}
                                             <p class="help-block">
                                                 {{ $error }}
                                             </p>
-                                        @endforeach
-                                    @endif
+                                        {% endfor %}
+                                    {% endif %}
 								</div>
-                                <div class="form-group{{ $errors->has('url') ? ' has-error' : '' }}">
+                                <div class="form-group{{ errors.has('url') ? ' has-error' : '' }}">
 									<label class="control-label">URL</label>
-                                    <input type="text" name="url" id="url" class="form-control" value="{{ isset( $page->url ) ? $page->url : ( old('url') ? old('url'):'' ) }}">
-                                    @if( $errors->has('url') )
-                                        @foreach( $errors->get('url') as $error )
-                                            <p class="help-block">
-                                                {{ $error }}
-                                            </p>
-                                        @endforeach
-                                    @endif
+                                    <input type="text" name="url" id="url" class="form-control" value="{{ old('url') ? old('url') : ( page ? page.url:'' ) }}">
+                                    {% if errors.has('url') %}
+                                        {% for error in errors.get('url') %}
+                                            <p class="help-block">{{ error }}</p>
+                                        {% endfor %}
+                                    {% endif %}
 								</div>
-                                <div class="form-group{{ $errors->has('folder') ? ' has-error' : '' }}">
+                                <div class="form-group{{ errors.has('folder') ? ' has-error' : '' }}">
 									<label class="control-label">Folder</label>
 									<select name="folder" id="folder" class="form-control">
-										@foreach( $folders as $folder )
-											@if( ( isset( $page->folder_id ) && $page->folder_id == $folder->id ) || ( old('folder') && old('folder') == $folder->id ) )
-												<option selected value="{{ $folder->id }}">{{ $folder->name }}</option>
-											@else
-												<option value="{{ $folder->id }}">{{ $folder->name }}</option>
-											@endif
-										@endforeach
+										{% for folder in folders %}
+											{% if ( old('folder') and old('folder') == folder.id ) or ( page and page.folder.id == folder.id ) %}
+												<option selected value="{{ folder.id }}">{{ folder.name }}</option>
+											{% else %}
+												<option value="{{ folder.id }}">{{ folder.name }}</option>
+											{%endif %}
+										{% endfor %}
 									</select>
-                                    @if( $errors->has('folder') )
-                                        @foreach( $errors->get('folder') as $error )
-                                            <p class="help-block">
-                                                {{ $error }}
-                                            </p>
-                                        @endforeach
-                                    @endif
+                                    {% if errors.has('folder') %}
+                                        {% for error in errors.get('folder') %}
+                                            <p class="help-block">{{ error }}</p>
+                                        {% endfor %}
+                                    {% endif %}
 								</div>
 							</div>
 							<div class="col-lg-6">
                                 <div class="form-group{{ $errors->has('order') ? ' has-error' : '' }}">
 									<label class="control-label">Order</label>
 									<select name="order" id="order" class="form-control">
-										@for($i=0; $i<20; $i++)
-											@if( ( isset( $page->order ) && $page->order == $i ) or ( old('order') and old('order') == $i ) )
-												<option selected value="{{ $i }}">{{ $i }}</option>
-											@else
-												<option value="{{ $i }}">{{ $i }}</option>
-											@endif
-										@endfor
+										{% for i in 0..19 %}
+											{% if ( old('order') and old('order') == $i ) or ( page and page.order == i ) %}
+												<option selected value="{{ i }}">{{ i }}</option>
+											{% else %}
+												<option value="{{ i }}">{{ i }}</option>
+											{% endif %}
+										{% endfor %}
 									</select>
                                     @if( $errors->has('order') )
                                         @foreach( $errors->get('order') as $error )
