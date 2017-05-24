@@ -1,4 +1,5 @@
 /node_modules
+/public/fmfiles
 /public/storage
 /vendor
 /storage/email-previews

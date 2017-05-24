@@ -2,18 +2,21 @@
 
 {% block pagejs %}
 	<script src="{{ url('assets/plugins/ckeditor/ckeditor.js') }}"></script>
-	<script src="{{ url('assets/js/admin.site.page.js') }}"></script>
+	<script src="{{ url('assets/admin/js/admin.site.page.js') }}"></script>
 {% endblock %}
 
-{% section title %}
+{% block title %}
 	{{ page.id is defined ? 'Edit':'Create' }} Page
-{% endsection %}
+{% endblock %}
 
-{% section content %}
+{% block content %}
+	<!-- /.row -->
 	<div class="row">
 		<div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
+			<div class="box">
+				<div class="box-body">
+
+
 					<form method="POST">
 						<input type="hidden" name="_token" value="{{ csrf_token()|raw }}" />
 						<div class="row">
@@ -24,7 +27,7 @@
                                     {% if errors.has('name') %}
                                         {% for error in errors.get('name') %}
                                             <p class="help-block">
-                                                {{ $error }}
+                                                {{ error }}
                                             </p>
                                         {% endfor %}
                                     {% endif %}
@@ -42,7 +45,7 @@
 									<label class="control-label">Folder</label>
 									<select name="folder" id="folder" class="form-control">
 										{% for folder in folders %}
-											{% if ( old('folder') and old('folder') == folder.id ) or ( page and page.folder.id == folder.id ) %}
+											{% if ( old('folder') and old('folder') == folder.id ) or ( page and page.folder_id == folder.id ) %}
 												<option selected value="{{ folder.id }}">{{ folder.name }}</option>
 											{% else %}
 												<option value="{{ folder.id }}">{{ folder.name }}</option>
@@ -55,105 +58,98 @@
                                         {% endfor %}
                                     {% endif %}
 								</div>
+                                <div class="form-group{{ errors.has('layout') ? ' has-error' : '' }}">
+									<label class="control-label">Layout</label>
+									<select name="layout" id="layout" class="form-control">
+										{% for layout in layouts %}
+											{% if ( old('layout') and old('layout') == layout.id ) or ( page and page.layoute_id == layout.id ) %}
+												<option selected value="{{ layout.id }}">{{ layout.name }}</option>
+											{% else %}
+												<option value="{{ layout.id }}">{{ layout.name }}</option>
+											{%endif %}
+										{% endfor %}
+									</select>
+                                    {% if errors.has('layout') %}
+                                        {% for error in errors.get('layout') %}
+                                            <p class="help-block">{{ error }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+								</div>
 							</div>
 							<div class="col-lg-6">
-                                <div class="form-group{{ $errors->has('order') ? ' has-error' : '' }}">
+                                <div class="form-group{{ errors.has('order') ? ' has-error' : '' }}">
 									<label class="control-label">Order</label>
 									<select name="order" id="order" class="form-control">
-										{% for i in 0..19 %}
-											{% if ( old('order') and old('order') == $i ) or ( page and page.order == i ) %}
+										{% for i in 1..max_order %}
+											{% if ( old('order') and old('order') == i ) or ( page and page.order == i ) %}
 												<option selected value="{{ i }}">{{ i }}</option>
 											{% else %}
 												<option value="{{ i }}">{{ i }}</option>
 											{% endif %}
 										{% endfor %}
 									</select>
-                                    @if( $errors->has('order') )
-                                        @foreach( $errors->get('order') as $error )
-                                            <p class="help-block">
-                                                {{ $error }}
-                                            </p>
-                                        @endforeach
-                                    @endif
+                                    {% if errors.has('order') %}
+                                        {% for error in errors.get('order') %}
+                                            <p class="help-block">{{ error }}</p>
+                                        {% endfor %}
+                                    {% endif %}
 								</div>
-                                 <div class="form-group{{ $errors->has('visible') ? ' has-error' : '' }}">
+                                 <div class="form-group{{ errors.has('visible') ? ' has-error' : '' }}">
 									<label class="control-label">Visible</label>
 									<select name="visible" id="visible" class="form-control">
-										@if( ( isset( $page->visible ) && $page->visible == 'No' ) || ( old('visible') && old('visible') == 'No' ) )
+										{% if ( old('visible') and old('visible') == 'No' ) or ( page and page.visible == 'No' ) %}
 											<option value="Yes">Yes</option>
 											<option selected value="No">No</option>
-										@else
+										{%else %}
 											<option selected value="Yes">Yes</option>
 											<option value="No">No</option>
-										@endif
+										{% endif %}
 									</select>
-                                    @if( $errors->has('visible') )
-                                        @foreach( $errors->get('visible') as $error )
-                                            <p class="help-block">
-                                                {{ $error }}
-                                            </p>
-                                        @endforeach
-                                    @endif
+                                    {% if errors.has('visible') %}
+                                        {% for error in errors.get('visible') %}
+                                            <p class="help-block">{{ error }}</p>
+                                        {% endfor %}
+                                    {% endif %}
 								</div>
-                               <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+                               <div class="form-group{{ errors.has('status') ? ' has-error' : '' }}">
 									<label class="control-label">Status</label>
 									<select name="status" id="status" class="form-control">
-										@if( ( isset( $page->status ) && $page->status == 'Inactive' ) || ( old('status') && old('status') == 'Inactive' ) )
+										{% if ( old('status') and old('status') == 'Inactive' ) or ( page and page.status == 'Inactive' ) %}
 											<option value="Active">Active</option>
 											<option selected value="Inactive">Inactive</option>
-										@else
+										{% else %}
 											<option selected value="Active">Active</option>
 											<option value="Inactive">Inactive</option>
-										@endif
+										{% endif %}
 									</select>
-                                    @if( $errors->has('status') )
-                                        @foreach( $errors->get('status') as $error )
-                                            <p class="help-block">
-                                                {{ $error }}
-                                            </p>
-                                        @endforeach
-                                    @endif
+                                    {% if errors.has('status') %}
+                                        {% for error in errors.get('status') %}
+                                            <p class="help-block">{{ error }}</p>
+                                        {% endfor %}
+                                    {% endif %}
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-12">
-                                <div class="form-group{{ $errors->has('content') ? ' has-error' : '' }}">
+                                <div class="form-group{{ errors.has('content') ? ' has-error' : '' }}">
 									<label class="control-label">Page Content</label>
-									<textarea name="content" id="content">{{ isset( $page->content ) ? $page->content : ( old('content') ? old('content'):'' ) }}</textarea>
-                                    @if( $errors->has('content') )
-                                        @foreach( $errors->get('content') as $error )
-                                            <p class="help-block">
-                                                {{ $error }}
-                                            </p>
-                                        @endforeach
-                                    @endif
-								</div>
-
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-12">
-                                <div class="form-group{{ $errors->has('sidebar') ? ' has-error' : '' }}">
-									<label class="control-label">Side Bar Content ( optional )</label>
-									<textarea name="sidebar" id="sidebar">{{ isset( $page->sidebar ) ? $page->sidebar : ( old('sidebar') ? old('sidebar'):'' ) }}</textarea>
-                                    @if( $errors->has('sidebar') )
-                                        @foreach( $errors->get('sidebar') as $error )
-                                            <p class="help-block">
-                                                {{ $error }}
-                                            </p>
-                                        @endforeach
-                                    @endif
+									<textarea name="content" id="content">{{ old('content') ? old('content') : ( page ? page.content : '' ) }}</textarea>
+                                    {% if errors.has('content') %}
+                                        {% for error in errors.get('content') %}
+                                            <p class="help-block">{{ error }}</p>
+                                        {% endfor %}
+                                    {% endif %}
 								</div>
 
 							</div>
 						</div>
 						<div class='pull-right'>
-							<button type="submit" class="btn btn-primary">{{ isset( $page->id ) ? 'Update' : 'Create' }} Page</button>
+							<button type="submit" class="btn btn-primary">{{ page ? 'Update' : 'Create' }} Page</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-@endsection
+{% endblock %}

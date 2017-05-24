@@ -84,7 +84,7 @@ class AdminSiteController extends Controller {
         $page->url = $request->input('url');
         $page->name = $request->input('name');
         $page->content = $request->input('content');
-        $page->layout_id = $request->input('layout_id');
+        $page->layout_id = $request->input('layout');
         $page->order = $request->input('order');
         $page->status = $request->input('status');
         $page->visible = $request->input('visible');
@@ -104,10 +104,14 @@ class AdminSiteController extends Controller {
         $page = $id ? Page::find($id) : null;
         $layouts = PageLayout::get();
 
+		$max_order = Page::where('status', '=', 'Active')->where('visible', '=', 'Yes')->get()->count();
+		if( !$page || $page->status != 'Active' || $page->visible == 'No' ) $max_order++;
+
         return view('admin.site.page', [
-            'page'    => $page,
-            'folders' => $folders,
-			'layouts' => $layouts
+            'page'      => $page,
+            'folders'   => $folders,
+			'layouts'   => $layouts,
+			'max_order' => $max_order
         ]);
     }
 }

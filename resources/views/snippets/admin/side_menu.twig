@@ -1,45 +1,6 @@
-{% if isschool %}
-	<li class="header">MAIN NAVIGATION</li>
-	<li>
-		<a href="{{ url('classroom') }}">
-			<i class="fa fa-edit"></i> <span>Classrooms</span>
-			<span class="pull-right-container">
-				<small class="label pull-right bg-green">{{ current_school.Classrooms.count() }}</small>
-			</span>
-		</a>
-	</li>
-	<li>
-		<a href="{{ url('teacher') }}">
-			<i class="fa fa-edit"></i> <span>Teachers</span>
-			<span class="pull-right-container">
-				<small class="label pull-right bg-green">{{ current_school.Teachers.count() }}</small>
-			</span>
-		</a>
-	</li>
-
-	<li>
-		<a href="{{ url('student') }}">
-			<i class="fa fa-user"></i> <span>Students</span>
-			<span class="pull-right-container">
-				<small class="label pull-right bg-green">{{ current_school.Students.count() }}</small>
-			</span>
-		</a>
-	</li>
-{% else %}
-	<li class="header">MAIN NAVIGATION</li>
-	<li>
-		<a href="{{ url('account/school-list') }}">
-			<i class="fa fa-graduation-cap"></i> <span>Schools</span>
-			<span class="pull-right-container">
-				<small class="label pull-right bg-green">{{ user.Schools.count() }}</small>
-			</span>
-		</a>
-	</li>
-	{% if user.SchoolsAsOwner.count() > 0 %}
-		<li>
-			<a href="{{ url('account/payments') }}">
-				<i class="fa fa-usd"></i> <span>Payment History</span>
-			</a>
-		</li>
-	{% endif %}
-{% endif %}
+<li class="header">MAIN NAVIGATION</li>
+<li>
+	<a href="{{ url('admin/site') }}">
+		<i class="fa fa-graduation-cap"></i> <span>Site View</span>
+	</a>
+</li>
