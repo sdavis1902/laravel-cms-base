@@ -20,7 +20,7 @@
 				<!-- /.box-header -->
 				<div class="box-body">
 					{% for folder in folders %}
-						<table width="100%" class="table table-striped table-bordered table-hover">
+						<table width="100%" class="table table-bordered table-hover">
 							</thead>
 								<tr>
 									<td width="26%"><i class="fa fa-folder"></i> {{ folder.name }}</td>
@@ -29,8 +29,8 @@
 										<a href="{{ url('admin/site/folder-change-order/' ~ folder.id ~ '/desc') }}"><i class="fa fa-sort-desc fa-lg" style="margin-right:5px;"></i></a>
 										<a href="{{ url('admin/site/folder-change-order/' ~ folder.id ~ '/asc') }}"><i class="fa fa-sort-asc fa-lg" style="margin-left:5px;"></i></a>
 									</td>
-									<td width="12%">{{ folder.visible == 'Yes' ? 'Visible' : 'Invisible' }}</td>
-									<td width="12%">{{ folder.status }}</td>
+									<td width="12%"><a href="{{ url('admin/site/folder-change-visible/' ~ folder.id) }}">{{ folder.visible == 'Yes' ? 'Visible' : 'Invisible' }}</a></td>
+									<td width="12%"><a href="{{ url('admin/site/folder-change-status/' ~ folder.id) }}">{{ folder.status }}</a></td>
 									<td width="12%">
 										<a href="{{ url('admin/site/folder/' ~ folder.id) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
 										<a href="{{ url('admin/site/folder-delete/' ~ folder.id) }}" class="btn btn-danger btn-xs folder-delete"><i class="fa fa-times"></i></a>
@@ -46,8 +46,8 @@
 											<a href="{{ url('admin/site/page-change-order/' ~ page.id ~ '/desc') }}"><i class="fa fa-sort-desc fa-lg" style="margin-right:5px;"></i></a>
 											<a href="{{ url('admin/site/page-change-order/' ~ page.id ~ '/asc') }}"><i class="fa fa-sort-asc fa-lg" style="margin-left:5px;"></i></a>
 										</td>
-										<td>{{ page.visible == 'Yes' ? 'Visible' : 'Invisible' }}</td>
-										<td>{{ page.status }}</td>
+										<td><a href="{{ url('admin/site/page-change-visible/' ~ page.id) }}">{{ page.visible == 'Yes' ? 'Visible' : 'Invisible' }}</a></td>
+										<td><a href="{{ url('admin/site/page-change-status/' ~ page.id) }}">{{ page.status }}</a></td>
 										<td>
 											<a href="{{ url('admin/site/page/' ~ page.id) }}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
 											<a href="{{ url('admin/site/page-delete/' ~ page.id) }}" class="btn btn-danger btn-xs page-delete"><i class="fa fa-times"></i></a>

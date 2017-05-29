@@ -89,6 +89,28 @@ class AdminSiteController extends Controller {
 		return redirect('admin/site')->withMessage('Folder could not be re ordered, nothing to swap with');
 	}
 
+	public function getFolderChangeVisible($id){
+		$folder = Folder::find($id);
+
+		if(!$folder) return redirect('admin/site')->withError('Invalid Folder ID.  Could not change folder visibility.');
+
+		$folder->visible = $folder->visible == 'Yes' ? 'No' : 'Yes';
+		$folder->save();
+
+		return redirect('admin/site')->withMessage('Folder visibility has been updated');
+	}
+
+	public function getFolderChangeStatus($id){
+		$folder = Folder::find($id);
+
+		if(!$folder) return redirect('admin/site')->withError('Invalid Folder ID.  Could not change folder status.');
+
+		$folder->status = $folder->status == 'Active' ? 'Inactive' : 'Active';
+		$folder->save();
+
+		return redirect('admin/site')->withMessage('Folder status has been updated');
+	}
+
 	public function postPage(Request $request, $id = 0){
         $rules = [
             'name' => 'required',
@@ -165,5 +187,28 @@ class AdminSiteController extends Controller {
 		}
 
 		return redirect('admin/site')->withMessage('Page could not be re ordered, nothing to swap with');
+	}
+
+	public function getPageChangeVisible($id){
+		$page = Page::find($id);
+
+		if(!$page) return redirect('admin/site')->withError('Invalid Page ID.  Could not change page visibility.');
+
+		$page->visible = $page->visible == 'Yes' ? 'No' : 'Yes';
+		$page->save();
+
+		return redirect('admin/site')->withMessage('Page visibility has been updated');
+	}
+
+	public function getPageChangeStatus($id){
+		$page = Page::find($id);
+
+		if(!$page) return redirect('admin/site')->withError('Invalid Page ID.  Could not change page status.');
+
+		$page->status = $page->status == 'Active' ? 'Inactive' : 'Active';
+		$page->save();
+
+		return redirect('admin/site')->withMessage('Page status has been updated');
+
 	}
 }
