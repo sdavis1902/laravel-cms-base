@@ -2,7 +2,7 @@
 
 {% block pagejs %}
 	<script src="{{ url('assets/plugins/ckeditor/ckeditor.js') }}"></script>
-	<script src="{{ url('assets/admin/js/admin.site.page.js') }}"></script>
+	<script src="{{ url('assets/admin/js/site.page.js') }}"></script>
 {% endblock %}
 
 {% block title %}
@@ -77,23 +77,6 @@
 								</div>
 							</div>
 							<div class="col-lg-6">
-                                <div class="form-group{{ errors.has('order') ? ' has-error' : '' }}">
-									<label class="control-label">Order</label>
-									<select name="order" id="order" class="form-control">
-										{% for i in 1..max_order %}
-											{% if ( old('order') and old('order') == i ) or ( page and page.order == i ) %}
-												<option selected value="{{ i }}">{{ i }}</option>
-											{% else %}
-												<option value="{{ i }}">{{ i }}</option>
-											{% endif %}
-										{% endfor %}
-									</select>
-                                    {% if errors.has('order') %}
-                                        {% for error in errors.get('order') %}
-                                            <p class="help-block">{{ error }}</p>
-                                        {% endfor %}
-                                    {% endif %}
-								</div>
                                  <div class="form-group{{ errors.has('visible') ? ' has-error' : '' }}">
 									<label class="control-label">Visible</label>
 									<select name="visible" id="visible" class="form-control">

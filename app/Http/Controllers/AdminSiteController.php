@@ -38,11 +38,11 @@ class AdminSiteController extends Controller {
             if( !$folder ) return redirect('admin/site')->withError('Could not find folder with the provided id');
         }else{
             $folder = new Folder;
+			$folder->order = Folder::get()->count()+1;
         }
 
         $folder->url = $request->input('url');
         $folder->name = $request->input('name');
-        $folder->order = $request->input('order');
         $folder->status = $request->input('status');
         $folder->visible = $request->input('visible');
         $folder->save();
@@ -54,14 +54,40 @@ class AdminSiteController extends Controller {
     public function getFolder($id = 0){
         $folder = $id ? Folder::find($id) : null;
 
-		$max_order = Folder::where('status', '=', 'Active')->where('visible', '=', 'Yes')->get()->count();
-		if( !$folder || $folder->status != 'Active' || $folder->visible == 'No' ) $max_order++;
-
         return view('admin.site.folder', [
-            'folder'    => $folder,
-			'max_order' => $max_order
+            'folder'    => $folder
         ]);
     }
+
+	public function getFolderDelete($id){
+		$folder = Folder::find($id);
+
+		if(!$folder) return redirect('admin/site')->withError('Invalid Folder ID.  Could not delete Folder.');
+
+		$folder->delete();
+		return redirect('admin/site')->withMessage('Folder has been deleted');
+	}
+
+	public function getFolderChangeOrder($id, $direction){
+		$direction = $direction == 'asc' ? 'asc' : 'desc';
+		$folder = Folder::find($id);
+
+		if(!$folder) return redirect('admin/site')->withError('Invalid Folder ID.  Could not re order Folder.');
+
+		$neworder = $direction == 'desc' ? $folder->order + 1 : $folder->order - 1;
+		$swapfolder = Folder::where('order', '=', $neworder)->first();
+
+		if( $swapfolder ){
+			$swapfolder->order = $folder->order;
+			$swapfolder->save();
+			$folder->order = $neworder;
+			$folder->save();
+
+			return redirect('admin/site')->withMessage('Folder has been re ordered');
+		}
+
+		return redirect('admin/site')->withMessage('Folder could not be re ordered, nothing to swap with');
+	}
 
 	public function postPage(Request $request, $id = 0){
         $rules = [
@@ -79,13 +105,13 @@ class AdminSiteController extends Controller {
             if( !$page ) return redirect('admin/site')->withError('Could not find page with the provided id');
         }else{
             $page = new Page;
+			$page->order = Page::get()->count()+1;
         }
 
         $page->url = $request->input('url');
         $page->name = $request->input('name');
         $page->content = $request->input('content');
         $page->layout_id = $request->input('layout');
-        $page->order = $request->input('order');
         $page->status = $request->input('status');
         $page->visible = $request->input('visible');
         $page->folder_id = $request->input('folder');
@@ -104,14 +130,40 @@ class AdminSiteController extends Controller {
         $page = $id ? Page::find($id) : null;
         $layouts = PageLayout::get();
 
-		$max_order = Page::where('status', '=', 'Active')->where('visible', '=', 'Yes')->get()->count();
-		if( !$page || $page->status != 'Active' || $page->visible == 'No' ) $max_order++;
-
         return view('admin.site.page', [
             'page'      => $page,
             'folders'   => $folders,
-			'layouts'   => $layouts,
-			'max_order' => $max_order
+			'layouts'   => $layouts
         ]);
     }
+
+	public function getPageDelete($id){
+		$page = Page::find($id);
+
+		if(!$page) return redirect('admin/site')->withError('Invalid Page ID.  Could not delete Page.');
+
+		$page->delete();
+		return redirect('admin/site')->withMessage('Page has been deleted');
+	}
+
+	public function getPageChangeOrder($id, $direction){
+		$direction = $direction == 'asc' ? 'asc' : 'desc';
+		$page = Page::find($id);
+
+		if(!$page) return redirect('admin/site')->withError('Invalid Page ID.  Could not re order Page.');
+
+		$neworder = $direction == 'desc' ? $page->order + 1 : $page->order - 1;
+		$swappage = page::where('folder_id', '=', $page->folder_id)->where('order', '=', $neworder)->first();
+
+		if( $swappage ){
+			$swappage->order = $page->order;
+			$swappage->save();
+			$page->order = $neworder;
+			$page->save();
+
+			return redirect('admin/site')->withMessage('Page has been re ordered');
+		}
+
+		return redirect('admin/site')->withMessage('Page could not be re ordered, nothing to swap with');
+	}
 }

@@ -32,23 +32,6 @@
                                         {% endfor %}
                                     {% endif %}
 								</div>
-                                <div class="form-group{{ errors.has('order') ? ' has-error':'' }}">
-									<label class="control-label">Order</label>
-									<select name="order" id="order" class="form-control">
-										{% for i in 1..max_order %}
-											{% if old('order') == i or folder.order == i %}
-												<option selected value="{{ i }}">{{ i }}</option>
-											{% else %}
-												<option value="{{ i }}">{{ i }}</option>
-											{% endif %}
-										{% endfor %}
-									</select>
-                                    {% if errors.has('order') %}
-                                        {% for error in errors.get('order') %}
-                                            <p class="help-block">{{ error }}</p>
-                                        {% endfor %}
-                                    {% endif %}
-								</div>
 								<div class="form-group{{ errors.has('visible') ? ' has-error':'' }}">
 									<label class="control-label">Visible</label>
 									<select name="visible" id="visible" class="form-control">
