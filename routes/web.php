@@ -21,3 +21,11 @@ Route::group(['middleware' => ['authcheck', 'adminviewshare']], function () {
     MoreRoute::controller('admin/user', 'AdminUserController');
     MoreRoute::controller('admin/site', 'AdminSiteController');
 });
+
+Route::group(['middleware' => 'getFrontMenuItems'], function(){
+    Route::get('/', 'PageController@getHomePage');
+
+    Route::get('{page}', [
+        'uses' => 'PageController@getPage',
+    ])->where(['page' => '^((?!admin).)*$']);
+});

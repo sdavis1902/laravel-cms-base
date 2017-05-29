@@ -50,14 +50,15 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'auth'              => \Illuminate\Auth\Middleware\Authenticate::class,
+        'auth.basic'        => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'bindings'          => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'can'               => \Illuminate\Auth\Middleware\Authorize::class,
+        'guest'             => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'throttle'          => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 
 		'authcheck'         => \App\Http\Middleware\AuthCheck::class,
-        'adminviewshare'   => \App\Http\Middleware\AdminViewShare::class,
+        'adminviewshare'    => \App\Http\Middleware\AdminViewShare::class,
+		'getFrontMenuItems' => \App\Http\Middleware\GetFrontMenuItems::class,
     ];
 }
