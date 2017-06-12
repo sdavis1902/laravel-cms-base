@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// master
 MoreRoute::controller('admin/auth', 'AdminAuthController');
 
 Route::get('admin', function(){
