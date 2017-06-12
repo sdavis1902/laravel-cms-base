@@ -12,6 +12,7 @@ use App\Models\PageLayout;
 use App\Models\Folder;
 
 class AdminSiteController extends Controller {
+	// a change to test auto deploy
 	public function getIndex(){
         $folders = Folder::with(['pages' => function($q){
             $q->orderBy('order','asc');
