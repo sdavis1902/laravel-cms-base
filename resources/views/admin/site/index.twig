@@ -41,7 +41,7 @@
 								{% for page in folder.pages %}
 									<tr>
 										<td><i class="fa fa-level-up fa-rotate-90" style="margin-right:8px; margin-left:8px;"></i><i class="fa fa-file-o"></i> {{ page.name }}</td>
-										<td>{{ page.url }}</td>
+										<td><a target="_blank" href="{{ url(page.url) }}">{{ page.url }}</a></td>
 										<td style="text-align:center;">
 											<a href="{{ url('admin/site/page-change-order/' ~ page.id ~ '/desc') }}"><i class="fa fa-sort-desc fa-lg" style="margin-right:5px;"></i></a>
 											<a href="{{ url('admin/site/page-change-order/' ~ page.id ~ '/asc') }}"><i class="fa fa-sort-asc fa-lg" style="margin-left:5px;"></i></a>

@@ -25,7 +25,9 @@ class PageController extends Controller {
 
 	public function getHomePage(){
 		$folder = Folder::orderBy('order', 'asc')->first();
+		if(!$folder) abort('404');
 		$page = Page::where('folder_id', '=', $folder->id)->orderBy('order', 'asc')->first();
+		if(!$page) abort('404');
 		return $this->getPage($page->url);
 	}
 }
