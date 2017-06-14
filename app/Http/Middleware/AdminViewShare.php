@@ -21,6 +21,9 @@ class AdminViewShare
 		$current_url = $request->path();
 		View::share('current_url', $current_url);
 
+		View::share('app_title', env('APP_TITLE'));
+        View::share('app_title_short', env('APP_TITLE_SHORT'));
+
         return $next($request);
     }
 }

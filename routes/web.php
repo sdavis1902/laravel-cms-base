@@ -11,15 +11,18 @@
 |
 */
 // master
-MoreRoute::controller('admin/auth', 'AdminAuthController');
 
 Route::get('admin', function(){
 	return redirect('admin/dashboard');
 });
-Route::group(['middleware' => ['authcheck', 'adminviewshare']], function () {
-    MoreRoute::controller('admin/dashboard', 'AdminDashboardController');
-    MoreRoute::controller('admin/user', 'AdminUserController');
-    MoreRoute::controller('admin/site', 'AdminSiteController');
+
+Route::group(['middleware' => ['adminviewshare']], function () {
+	MoreRoute::controller('admin/auth', 'AdminAuthController');
+	Route::group(['middleware' => ['authcheck']], function () {
+		MoreRoute::controller('admin/dashboard', 'AdminDashboardController');
+		MoreRoute::controller('admin/user', 'AdminUserController');
+		MoreRoute::controller('admin/site', 'AdminSiteController');
+	});
 });
 
 Route::group(['middleware' => 'getFrontMenuItems'], function(){
