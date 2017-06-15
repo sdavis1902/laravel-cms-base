@@ -183,6 +183,7 @@ return [
 		DougSisk\CountryState\CountryStateServiceProvider::class,
 		Intervention\Image\ImageServiceProvider::class,
 		sdavis1902\LaravelControllerRoutes\LaravelControllerRoutesServiceProvider::class,
+		PragmaRX\Google2FA\Vendor\Laravel\ServiceProvider::class,
     ],
 
     /*
@@ -239,6 +240,7 @@ return [
 		'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
 		'Image' => Intervention\Image\Facades\Image::class,
 		'MoreRoute' => sdavis1902\LaravelControllerRoutes\Facades\MoreRoute::class,
+		'Google2FA' => PragmaRX\Google2FA\Vendor\Laravel\Facade::class,
     ],
 
 ];

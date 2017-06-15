@@ -11,6 +11,7 @@
         "intervention/image": "^2.3",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
+        "pragmarx/google2fa": "^1.0",
         "rcrowe/twigbridge": "^0.9.4",
         "sdavis1902/laravel-controller-routes": "^1.0",
         "venturecraft/revisionable": "^1.28"

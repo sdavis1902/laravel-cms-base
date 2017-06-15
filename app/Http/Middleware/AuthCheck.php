@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Sentinel;
 use App\Models\Site;
+use Session;
 
 class AuthCheck
 {
@@ -25,6 +26,10 @@ class AuthCheck
         }
 
 		$user = Sentinel::getUser();
+		// they are logged in, lets check if they have 2fa enabled
+		if($user->getVar('2fa_enabled') && !Session::has('2fa_confirmed')){
+			return redirect()->guest('admin/auth/2fa');
+		}
 		\View::share('user', $user);
 
         return $next($request);

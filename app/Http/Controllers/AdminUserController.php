@@ -11,6 +11,7 @@ use Session;
 use Reminder;
 use Mail;
 use Illuminate\Validation\Rule;
+use Google2FA;
 
 use App\Models\User;
 
@@ -90,4 +91,60 @@ class AdminUserController extends Controller {
 
 		return redirect('admin/user')->withMessage('User has been removed');
 	}
+
+	public function get2faEnable(){
+        $user = Sentinel::getUser();
+
+        $secret = Google2FA::generateSecretKey();
+        $user->setVar('2fa_secret', $secret);
+
+        return redirect('admin/user/2fa')->withMessage('Two Factor Authentication has been enabled');
+    }
+
+    public function get2faDisable(){
+        $user = Sentinel::getUser();
+        $user->deleteVar('2fa_secret');
+        $user->deleteVar('2fa_enabled');
+
+        return redirect('admin/user/2fa')->withMessage('Two Factor Authentication has been disabled');
+    }
+
+    public function post2fa(Request $request){
+        $code = $request->input('code');
+
+        if(!$code) return redirect('admin/user/2fa')->withError('Invalid Code, could not activate Two Factor Authentication');
+
+        $user = Sentinel::getUser();
+        $secret = $user->getVar('2fa_secret');
+        if(!$secret) return redirect('admin/user/2fa')->withError('Two Factor Authentication is not yet enabled');
+
+        $result = Google2FA::verifyKey($secret, $code);
+
+        if(!$result) return redirect('admin/user/2fa')->withError('Invalid Code, please try again');
+
+        $user->setVar('2fa_enabled', 1);
+
+        return redirect('admin/user/2fa')->withMessage('Two Factor Authentication is active and confirmed');
+    }
+
+	public function get2fa(){
+        $user = Sentinel::getUser();
+        $secret = $user->getVar('2fa_secret');
+        $enabled = $user->getVar('2fa_enabled');
+
+        $qr_url = null;
+        if($secret){
+            $qr_url = Google2FA::getQRCodeGoogleUrl(
+                env('APP_TITLE'),
+                $user->email,
+                $secret
+            );
+        }
+
+        return view('admin.user.2fa', [
+            'user'    => $user,
+            'qr_url'  => $qr_url,
+            'enabled' => $enabled
+        ]);
+    }
 }

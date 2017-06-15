@@ -1,0 +1,42 @@
+{% extends 'admin.layouts.main' %}
+
+{% block content %}
+	<div class="login-box">
+		<div class="login-logo">
+			{{ app_title }}
+		</div>
+		<!-- /.login-logo -->
+		<div class="login-box-body">
+			<p class="login-box-msg">Please enter your Two Factor Authentication code to complete your login</p>
+			<form method="post">
+				<input type="hidden" name="_token" value="{{ csrf_token()|raw }}" />
+				<div class="form-group has-feedback">
+					<input type="test" name="code" class="form-control">
+				</div>
+				<div class="row">
+					<div class="col-xs-8">
+					</div>
+					<!-- /.col -->
+					<div class="col-xs-4">
+						<button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+					</div>
+					<!-- /.col -->
+				</div>
+				{% if demo %}
+					<div class="row">
+						<div class="col-md-12">
+							Username: admin@example.org
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							Password: admin
+						</div>
+					</div>
+				{% endif %}
+			</form>
+		</div>
+		<!-- /.login-box-body -->
+	</div>
+	<!-- /.login-box -->
+{% endblock %}

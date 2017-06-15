@@ -11,6 +11,7 @@ use Session;
 use App\Models\User;
 use Reminder;
 use Mail;
+use Google2FA;
 
 class AdminAuthController extends Controller {
 
@@ -53,6 +54,7 @@ class AdminAuthController extends Controller {
 
     public function getLogout(){
         Sentinel::logout(null, true);
+		Session::forget('2fa_confirmed');
         return redirect('admin/auth/login');
     }
 
@@ -118,5 +120,33 @@ class AdminAuthController extends Controller {
             'code'  => $code,
             'userid'=> $user->id
         ]);
+    }
+
+	public function post2fa(Request $request){
+        if(Session::has('2fa_confirmed')) return redirect('admin');
+        $user = Sentinel::getUser();
+        if(!$user->getVar('2fa_enabled')) return redirect('admin');// 2fa not enabled, redirect
+
+        $secret = $user->getVar('2fa_secret');
+        if(!$secret) return redirect('admin');
+
+        $code = $request->input('code');
+        if(!$code) return redirect('admin/auth/2fa')->withError('Invalid Code');
+
+        $result = Google2FA::verifyKey($secret, $code);
+
+        if(!$result) return redirect('admin/auth/2fa')->withError('Invalid Code, please try again');
+
+        Session::put('2fa_confirmed', 1);
+
+        return redirect()->intended('admin');
+    }
+
+    public function get2fa(){
+        if(Session::has('2fa_confirmed')) return redirect('admin');// already 2fa'd redirect
+        $user = Sentinel::getUser();
+        if(!$user->getVar('2fa_secret') && !$user->getVar('2fa_enabled')) return redirect('admin');// 2fa not enabled, redirect
+
+        return view('admin.auth.2fa');
     }
 }
