@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -11,7 +11,7 @@ use App\Models\Page;
 use App\Models\PageLayout;
 use App\Models\Folder;
 
-class AdminSiteController extends Controller {
+class SiteController extends Controller {
 	// a change to test auto deploy
 	public function getIndex(){
         $folders = Folder::with(['pages' => function($q){

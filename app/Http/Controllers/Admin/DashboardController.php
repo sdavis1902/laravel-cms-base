@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -12,7 +12,7 @@ use Reminder;
 use Mail;
 use Illuminate\Validation\Rule;
 
-class AdminDashboardController extends Controller {
+class DashboardController extends Controller {
 	public function getIndex(){
 		return view('welcome');
 	}

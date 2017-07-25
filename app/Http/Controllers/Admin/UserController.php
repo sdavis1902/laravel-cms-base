@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -15,7 +15,7 @@ use Google2FA;
 
 use App\Models\User;
 
-class AdminUserController extends Controller {
+class UserController extends Controller {
 	public function getIndex(){
 		$users = User::get();
 

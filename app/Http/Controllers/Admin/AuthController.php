@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -13,7 +13,7 @@ use Reminder;
 use Mail;
 use Google2FA;
 
-class AdminAuthController extends Controller {
+class AuthController extends Controller {
 
     public function postLogin(Request $request){
         $v = Validator::make($request->all(), [
